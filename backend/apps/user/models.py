@@ -11,7 +11,7 @@ from apps.user.managers import UserManager
 class UserModel(AbstractBaseUser, PermissionsMixin, BaseModel):
     class Meta:
         db_table = 'auth_user'
-        ordering = ['-id']
+        ordering = ['id']
 
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=False)
@@ -19,6 +19,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     USERNAME_FIELD = 'email'
     objects = UserManager()
+
 
 class ProfileModel(models.Model):
     class Meta:
@@ -28,6 +29,9 @@ class ProfileModel(models.Model):
     surname = models.CharField(max_length=20)
     age = models.IntegerField()
     phone = models.CharField(max_length=20, validators=[V.RegexValidator(RegexEnum.PhoneValidator.pattern, RegexEnum.PhoneValidator.message)])
-
+    birthday = models.DateField()
+    city = models.CharField(max_length=20)
+    country = models.CharField(max_length=20)
+    nationality = models.CharField(max_length=20)
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')
 
