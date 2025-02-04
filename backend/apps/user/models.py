@@ -30,8 +30,7 @@ class ProfileModel(models.Model):
     age = models.IntegerField()
     phone = models.CharField(max_length=20, validators=[V.RegexValidator(RegexEnum.PhoneValidator.pattern, RegexEnum.PhoneValidator.message)])
     birthday = models.DateField()
-    city = models.CharField(max_length=20)
-    country = models.CharField(max_length=20)
+    city = models.CharField(max_length=30, validators=[V.RegexValidator(RegexEnum.CityCountryNameValidator.pattern, RegexEnum.CityCountryNameValidator.message)])
+    country = models.CharField(max_length=30, validators=[V.RegexValidator(RegexEnum.CityCountryNameValidator.pattern, RegexEnum.CityCountryNameValidator.message)])
     nationality = models.CharField(max_length=20)
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')
-

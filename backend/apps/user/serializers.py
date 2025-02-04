@@ -17,7 +17,11 @@ class ProfileSerializer(serializers.ModelSerializer):
             'name',
             'surname',
             'age',
-            'phone'
+            'birthday',
+            'phone',
+            'country',
+            'city',
+            'nationality'
         )
 
 
@@ -53,4 +57,15 @@ class UserSerializer(serializers.ModelSerializer):
         EmailService.register(user)
         return user
 
+    @atomic
+    def update(self, instance, validated_data):
+        profile_data = validated_data.pop('profile', None)
+        profile_instance = instance.profile
+
+        if profile_data:
+            for attr, value in profile_data.items():
+                setattr(profile_instance, attr, value)
+            profile_instance.save()
+
+        return instance
 

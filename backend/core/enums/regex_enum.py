@@ -7,6 +7,11 @@ class RegexEnum(Enum):
         'Phone number must start with "+380" and then have 9 digits'
     )
 
+    CityCountryNameValidator = (
+        r'^[A-Z][a-zA-Z0-9_-]{1,29}$',
+        'Name must start with upper case and contain maximum 30 letters'
+    )
+
     def __init__(self, pattern, message):
         self.pattern = pattern
         self.message = message
