@@ -5,9 +5,17 @@ from rest_framework import serializers
 
 from core.services.email_service import EmailService
 
+from apps.post.serializers import PostSerializer
 from apps.user.models import ProfileModel
 
 UserModel = get_user_model()
+
+
+class UserPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProfileModel
+        fields = ('photo',)
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,13 +29,14 @@ class ProfileSerializer(serializers.ModelSerializer):
             'phone',
             'country',
             'city',
+            'photo',
             'nationality'
         )
 
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
-
+    posts = PostSerializer(many=True)
     class Meta:
         model = UserModel
         fields = (
@@ -40,7 +49,8 @@ class UserSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'last_login',
-            'profile'
+            'profile',
+            'posts'
         )
         read_only_fields = ('id', 'is_active', 'is_staff', 'is_superuser', 'created_at', 'updated_at', 'last_login')
         extra_kwargs = {

@@ -1,5 +1,9 @@
 from django_filters import rest_framework as filters
 
+from django.contrib.auth import get_user_model
+
+UserModel = get_user_model()
+
 
 class UserFilter(filters.FilterSet):
     # user
@@ -87,3 +91,10 @@ class UserFilter(filters.FilterSet):
     nationality_iendswith = filters.CharFilter(field_name='profile__nationality', lookup_expr='iendswith')
     nationality_contains = filters.CharFilter(field_name='profile__nationality', lookup_expr='contains')
     nationality_icontains = filters.CharFilter(field_name='profile__nationality', lookup_expr='icontains')
+
+    class Meta:
+        model = UserModel
+        fields = {
+            'id': ['exact'],
+            'email': ['exact', 'icontains'],
+        }
