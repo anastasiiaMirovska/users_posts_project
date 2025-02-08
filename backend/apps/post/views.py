@@ -1,3 +1,7 @@
+from drf_yasg.utils import swagger_auto_schema
+
+from django.utils.decorators import method_decorator
+
 from rest_framework import status
 from rest_framework.exceptions import NotFound, PermissionDenied
 from rest_framework.generics import DestroyAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
@@ -9,7 +13,19 @@ from apps.post.serializers import PostPhotoSerializer, PostSerializer
 from apps.user.permissions import IsPostOwnerOrAdmin, IsPostPhotoOwnerOrAdmin
 
 
+@method_decorator(
+    name='get',
+    decorator=swagger_auto_schema(
+        security=[]
+    )
+)
 class PostListCreateView(ListCreateAPIView):
+    """
+    get:
+        Returns a list of posts. It can be done by anyone, even by unauthenticated users. You can also filter it by author
+    post:
+        Creates a new post for user
+    """
     serializer_class = PostSerializer
     queryset = PostModel.objects.all()
     permission_classes = [IsAuthenticated]
@@ -28,10 +44,30 @@ class PostListCreateView(ListCreateAPIView):
         return super().post(request, *args, **kwargs)
 
 
-class PostUpdateDestroyView(UpdateAPIView, DestroyAPIView):
+@method_decorator(
+    name='get',
+    decorator=swagger_auto_schema(
+        security=[]
+    )
+)
+class PostRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Returns a post.It can be done by anyone, even by unauthenticated users.
+    put:
+        Updates a post (full). It can be done only by post owner, admin or superuser
+    patch:
+        Partially updates a post. It can be done only by post owner, admin or superuser
+    delete:
+    Deletes a post. It can be done only by post owner, admin or superuser
+    """
     queryset = PostModel.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsPostOwnerOrAdmin,IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return [IsPostOwnerOrAdmin, IsAuthenticated]
 
     def patch(self, request, *args, **kwargs):
         post = self.get_object()
@@ -53,7 +89,19 @@ class PostUpdateDestroyView(UpdateAPIView, DestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@method_decorator(
+    name='get',
+    decorator=swagger_auto_schema(
+        security=[]
+    )
+)
 class PostPhotosListCreateView(ListCreateAPIView):
+    """
+    get:
+        Returns a list of all post photos. It can be done by anyone, even by unauthenticated users.
+    post:
+        Creates a new post photo. You can add many photos to a post. It can be done only by post photo owner, admin or superuser
+    """
     serializer_class = PostPhotoSerializer
     permission_classes = [IsPostPhotoOwnerOrAdmin]
 
@@ -68,9 +116,25 @@ class PostPhotosListCreateView(ListCreateAPIView):
         serializer.save(post_id=post_id)
 
 
+@method_decorator(
+    name='get',
+    decorator=swagger_auto_schema(
+        security=[]
+    )
+)
 class PostPhotoRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Returns a single post photo. It can be done by anyone, even by unauthenticated users.
+    put:
+        Updates a post photo. It can be done only by post photo owner, admin or superuser
+    delete:
+        Deletes a post photo. It can be done by post photo owner, admin or superuser
+    """
+
     serializer_class = PostPhotoSerializer
     permission_classes = [IsPostPhotoOwnerOrAdmin, IsAuthenticated]
+    http_method_names = ['get', 'put', 'delete']
 
     def get_object(self):
         post_id = self.kwargs.get('pk')

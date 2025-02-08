@@ -1,4 +1,7 @@
+from drf_yasg.utils import swagger_auto_schema
+
 from django.contrib.auth import get_user_model
+from django.utils.decorators import method_decorator
 
 from rest_framework import status
 from rest_framework.generics import DestroyAPIView, GenericAPIView, ListCreateAPIView, UpdateAPIView, get_object_or_404
@@ -14,7 +17,12 @@ from apps.user.serializers import ProfileSerializer, UserPhotoSerializer, UserSe
 
 UserModel = get_user_model()
 
-
+@method_decorator(
+    name='post',
+    decorator=swagger_auto_schema(
+        security=[]
+    )
+)
 class UserListCreateView(ListCreateAPIView):
     """
     get:
@@ -40,7 +48,7 @@ class UserUpdateDestroyView(UpdateAPIView, DestroyAPIView):
         Updates user profile(full). It can be done only by profile owner,admin or superuser
     patch:
         Partially updates user profile. It can be done only by profile owner,admin or superuser
-    destroy:
+    delete:
         Deletes user from DB. It can be done only by profile owner, admin or superuser
     """
 
@@ -82,6 +90,10 @@ class UserUpdateDestroyView(UpdateAPIView, DestroyAPIView):
 
 
 class ProfileAddPhotoView(GenericAPIView):
+    """
+    put:
+        Sets user photo profile. Such photo can be only one, so every time you send this request, the previous photo deletes and new one sets
+    """
     serializer_class = UserPhotoSerializer
     permission_classes = [IsProfileOwnerOrAdmin, IsAuthenticated]
     queryset = UserModel.objects.all()

@@ -65,6 +65,8 @@ class ActivateUserView(GenericAPIView):
     Makes user authorized by setting is_active=True
     """
     permission_classes = [AllowAny]
+    serializer_class = UserSerializer
+
 
     def patch(self, request, *args, **kwargs):
         token = kwargs['token']
@@ -80,6 +82,7 @@ class RecoveryRequestView(GenericAPIView):
     Sends letter with recovery token
     """
     permission_classes = [AllowAny]
+    serializer_class = EmailSerializer
 
     def post(self, *args, **kwargs):
         data = self.request.data
@@ -96,6 +99,7 @@ class RecoveryPasswordView(GenericAPIView):
     Sets new user password entered by user
     """
     permission_classes = [AllowAny]
+    serializer_class = PasswordSerializer
 
     def patch(self, *args, **kwargs):
         data = self.request.data
@@ -115,6 +119,10 @@ class UserLogoutView(GenericAPIView):
     Blacklists the refresh token, lets new last_logout value
     """
     permission_classes = [IsAuthenticated]
+
+    def get_serializer(self):
+        return None
+
     def post(self,request, *args, **kwargs):
         try:
             refresh_token = self.request.data['refresh']
@@ -135,6 +143,9 @@ class SocketTokenView(GenericAPIView):
     Creates a new token
     """
     permission_classes = [IsAuthenticated]
+
+    def get_serializer(self):
+        return None
 
     def get(self, *args, **kwargs):
         token = JWTService.create_token(self.request.user, SocketToken)
