@@ -110,33 +110,33 @@ class ProfileAddPhotoView(GenericAPIView):
 
 
 
-# class UserRetrieveView(GenericAPIView):
-#     """
-#     get:
-#         Get user info by his id or email
-#     """
-#     queryset = UserModel.objects.all()
-#     permission_classes = [IsAuthenticated]
-#     http_method_names = ['get']
-#
-#     def get_serializer(self):
-#         return None
-#
-#     def get(self, request, *args, **kwargs):
-#         user_id = request.GET.get('id')
-#         email = request.GET.get('email')
-#
-#         if not user_id and not email:
-#             return Response({"error": "Either 'id' or 'email' parameter is required"}, status=400)
-#
-#         if user_id:
-#             user = get_object_or_404(UserModel, id=user_id)
-#         else:
-#             serializer = EmailSerializer(data={"email": email})
-#             serializer.is_valid(raise_exception=True)
-#             user = get_object_or_404(UserModel, email=serializer.validated_data['email'])
-#
-#         return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
+class UserRetrieveView(GenericAPIView):
+    """
+    get:
+        Get user info by his id or email. It can also be done by the request to api/users
+    """
+    queryset = UserModel.objects.all()
+    permission_classes = [IsAuthenticated]
+    http_method_names = ['get']
+
+    def get_serializer(self):
+        return None
+
+    def get(self, request, *args, **kwargs):
+        user_id = request.GET.get('id')
+        email = request.GET.get('email')
+
+        if not user_id and not email:
+            return Response({"error": "Either 'id' or 'email' parameter is required"}, status=400)
+
+        if user_id:
+            user = get_object_or_404(UserModel, id=user_id)
+        else:
+            serializer = EmailSerializer(data={"email": email})
+            serializer.is_valid(raise_exception=True)
+            user = get_object_or_404(UserModel, email=serializer.validated_data['email'])
+
+        return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
 
 
 

@@ -26,13 +26,13 @@ class ProfileModel(models.Model):
     class Meta:
         db_table = 'profile'
 
-    name = models.CharField(max_length=20)
-    surname = models.CharField(max_length=20)
-    age = models.IntegerField()
+    name = models.CharField(max_length=20, validators=[V.RegexValidator(RegexEnum.NameValidator.pattern, RegexEnum.NameValidator.message)])
+    surname = models.CharField(max_length=20, validators=[V.RegexValidator(RegexEnum.NameValidator.pattern, RegexEnum.NameValidator.message)])
+    age = models.IntegerField(validators=[V.MinValueValidator(6), V.MaxValueValidator(100)])
     phone = models.CharField(max_length=20, validators=[V.RegexValidator(RegexEnum.PhoneValidator.pattern, RegexEnum.PhoneValidator.message)])
     birthday = models.DateField()
-    city = models.CharField(max_length=30, validators=[V.RegexValidator(RegexEnum.CityCountryNameValidator.pattern, RegexEnum.CityCountryNameValidator.message)])
-    country = models.CharField(max_length=30, validators=[V.RegexValidator(RegexEnum.CityCountryNameValidator.pattern, RegexEnum.CityCountryNameValidator.message)])
+    city = models.CharField(max_length=30, validators=[V.RegexValidator(RegexEnum.NameValidator.pattern, RegexEnum.NameValidator.message)])
+    country = models.CharField(max_length=30, validators=[V.RegexValidator(RegexEnum.NameValidator.pattern, RegexEnum.NameValidator.message)])
     nationality = models.CharField(max_length=20)
     photo = models.ImageField(upload_to=upload_user_photos, blank=True)
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')

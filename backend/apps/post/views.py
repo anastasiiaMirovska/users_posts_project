@@ -67,7 +67,7 @@ class PostRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     def get_permissions(self):
         if self.request.method == 'GET':
             return [AllowAny()]
-        return [IsPostOwnerOrAdmin, IsAuthenticated]
+        return [IsPostOwnerOrAdmin(), IsAuthenticated()]
 
     def patch(self, request, *args, **kwargs):
         post = self.get_object()

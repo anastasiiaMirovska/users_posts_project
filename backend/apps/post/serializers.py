@@ -15,7 +15,7 @@ class PostPhotoSerializer(ModelSerializer):
 
 
 class PostSerializer(ModelSerializer):
-    photos = PostPhotoSerializer(many=True)
+    photos = PostPhotoSerializer(many=True, read_only=True)
 
     class Meta:
         model = PostModel

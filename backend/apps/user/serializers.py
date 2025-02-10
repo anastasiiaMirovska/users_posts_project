@@ -36,7 +36,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
-    posts = PostSerializer(many=True)
+    posts = PostSerializer(many=True, read_only=True)
     class Meta:
         model = UserModel
         fields = (
@@ -52,7 +52,7 @@ class UserSerializer(serializers.ModelSerializer):
             'profile',
             'posts'
         )
-        read_only_fields = ('id', 'is_active', 'is_staff', 'is_superuser', 'created_at', 'updated_at', 'last_login')
+        read_only_fields = ('id', 'is_active', 'is_staff', 'is_superuser', 'created_at', 'updated_at', 'last_login', 'posts')
         extra_kwargs = {
             'password': {
                 'write_only': True
