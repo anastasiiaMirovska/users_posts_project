@@ -34,12 +34,36 @@
 								{
 									"key": "email",
 									"value": "admin@gmail.com",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "password",
 									"value": "admin",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "anastasiia.mirovska@gmail.com",
 									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "ostap.k@gmail.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "Ihor.k@gmail.com",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -113,14 +137,20 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/auth/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWN0aXZhdGUiLCJleHAiOjE3MzgzMjYwODcsImlhdCI6MTczODMyNDI4NywianRpIjoiYzI5MDZjNmQ3NTJkNDY1N2E5YjAwZTNmZjljZThlNjAiLCJ1c2VyX2lkIjozfQ.K2qipbOS3qw0Yg9kHURAsPig5xWFPZ2StXgRdcOeYE0",
+							"raw": "{{host}}/auth/activate/:token",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"auth",
 								"activate",
-								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWN0aXZhdGUiLCJleHAiOjE3MzgzMjYwODcsImlhdCI6MTczODMyNDI4NywianRpIjoiYzI5MDZjNmQ3NTJkNDY1N2E5YjAwZTNmZjljZThlNjAiLCJ1c2VyX2lkIjozfQ.K2qipbOS3qw0Yg9kHURAsPig5xWFPZ2StXgRdcOeYE0"
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWN0aXZhdGUiLCJleHAiOjE3MzkxODE5NjMsImlhdCI6MTczOTE4MDE2MywianRpIjoiYmM2YjgwOGMyODA1NGU0NWI0ZDMxMTY4ZTIwNjM2ZDAiLCJ1c2VyX2lkIjo4fQ.I9o3QZaHN_YT9cJkS43J2fecjO5r9c3ZP072Ow_XRAw"
+								}
 							]
 						}
 					},
@@ -192,6 +222,16 @@
 				{
 					"name": "Logout",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -205,13 +245,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{host}}/auth/loguot",
+							"raw": "{{host}}/auth/logout",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"auth",
-								"loguot"
+								"logout"
 							]
 						}
 					},
@@ -241,7 +281,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"anastasiia.mirovska@gmail.com\",\r\n    \"password\": \"12345\",\r\n    \"profile\": {\r\n               \r\n        \"name\": \"Anastasiia\",\r\n        \"surname\": \"Sijka\",\r\n        \"age\": 14,\r\n        \"phone\": \"+380974578986\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"email\":\"asyamirov6@gmail.com\",\r\n    \"password\": \"12345\",\r\n    \"profile\": {\r\n               \r\n        \"name\": \"Tetiana\",\r\n        \"surname\": \"Kondor\",\r\n        \"age\": 34,\r\n        \"phone\": \"+380974578986\",\r\n        \"birthday\": \"1991-12-29\",\r\n        \"city\": \"Boryslav\",\r\n        \"country\": \"Ukraine\",\r\n        \"nationality\": \"Ukrainian\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -282,6 +322,88 @@
 							],
 							"path": [
 								"users"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "admin@gmail.com",
+									"disabled": true
+								},
+								{
+									"key": "age_gt",
+									"value": "12",
+									"disabled": true
+								},
+								{
+									"key": "age_gte",
+									"value": "12",
+									"disabled": true
+								},
+								{
+									"key": "age_lt",
+									"value": "12",
+									"disabled": true
+								},
+								{
+									"key": "age_lte",
+									"value": "12",
+									"disabled": true
+								},
+								{
+									"key": "age_in",
+									"value": "34, 14",
+									"disabled": true
+								},
+								{
+									"key": "age_range",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "name_exact",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "name_iexact",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "name_startswith",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "name_istartswith",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "name_endswith",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "name_iendswith",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "name_contains",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "name_icontains",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -289,9 +411,46 @@
 				},
 				{
 					"name": "GetUserByIdOrEmail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{host}}/users/find?id=2&email=admin@gmail.com",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "email",
+									"value": "admin@gmail.com"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -316,18 +475,31 @@
 								{
 									"key": "name",
 									"value": "Ihor",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "age",
+									"value": "78",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{host}}/users/update",
+							"raw": "{{host}}/users/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
-								"update"
+								"1"
+							],
+							"query": [
+								{
+									"key": "age",
+									"value": "99",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -349,13 +521,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/users/delete",
+							"raw": "{{host}}/users/3",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
-								"delete"
+								"3"
 							]
 						}
 					},
@@ -365,7 +537,18 @@
 					"name": "test",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users/test/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"test",
+								"3"
+							]
+						}
 					},
 					"response": []
 				},
@@ -633,17 +816,46 @@
 				{
 					"name": "CreatePost",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "My post",
+									"type": "text"
+								},
+								{
+									"key": "text",
+									"value": "I just wanted to say hello",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
 						"url": {
-							"raw": "{{host}}/auth/posts/create",
+							"raw": "{{host}}/posts",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"auth",
-								"posts",
-								"create"
+								"posts"
 							]
 						}
 					},
@@ -653,7 +865,22 @@
 					"name": "GetAllPosts",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts?author=2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "author",
+									"value": "2"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -700,14 +927,24 @@
 						},
 						"method": "PATCH",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "New title",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
-							"raw": "{{host}}/posts/1",
+							"raw": "{{host}}/posts/2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"posts",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -717,7 +954,23 @@
 					"name": "GetPost",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
 					},
 					"response": []
 				},
