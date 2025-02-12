@@ -534,25 +534,6 @@
 					"response": []
 				},
 				{
-					"name": "test",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/users/test/3",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"users",
-								"test",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "FullUpdateUserProfile",
 					"request": {
 						"auth": {
@@ -669,14 +650,20 @@
 									"formdata": []
 								},
 								"url": {
-									"raw": "{{host}}/posts/2/photos",
+									"raw": "{{host}}/posts/:id/photos",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
 										"posts",
-										"2",
+										":id",
 										"photos"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
 									]
 								}
 							},
@@ -685,6 +672,16 @@
 						{
 							"name": "AddPostPhoto",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -698,13 +695,13 @@
 									]
 								},
 								"url": {
-									"raw": "{{host}}/posts/2/photos",
+									"raw": "{{host}}/posts/1/photos",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
 										"posts",
-										"2",
+										"1",
 										"photos"
 									]
 								}
@@ -784,6 +781,16 @@
 						{
 							"name": "DeletePostPhoto",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
@@ -804,7 +811,7 @@
 										},
 										{
 											"key": "photo_id",
-											"value": "3"
+											"value": "7"
 										}
 									]
 								}
